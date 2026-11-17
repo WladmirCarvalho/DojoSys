@@ -6,7 +6,7 @@ public class ConexaoDB {
     // Lembre-se de alterar a senha para a do seu banco local no Windows/WSL
     private static final String URL = "jdbc:postgresql://localhost:5432/dojosys";
     private static final String USUARIO = "postgres";
-    private static final String SENHA = "sua_senha";
+    private static final String SENHA = "1234";
 
     public static Connection conectar() {
         try {
