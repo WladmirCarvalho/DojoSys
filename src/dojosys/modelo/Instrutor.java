@@ -1,3 +1,5 @@
+package dojosys.modelo;
+
 public class Instrutor extends Praticante {
     private double salario;
 
@@ -8,18 +10,17 @@ public class Instrutor extends Praticante {
 
     @Override
     public void promoverFaixa(String novaFaixa) {
-        this.faixa = novaFaixa;
-        this.graus = 0;
+        atualizarFaixa(novaFaixa);
     }
 
     @Override
     public void adicionarGrau() {
         // Instrutores (geralmente pretas) têm regras diferentes de graus/dan, pode expandir depois
-        this.graus++; 
+        incrementarGrau();
     }
 
     @Override
     public void exibirResumo() {
-        System.out.println("[INSTRUTOR] " + nome + " | Faixa: " + faixa + " | Responsável pelas aulas");
+        System.out.println("[INSTRUTOR] " + getNome() + " | Faixa: " + getFaixa() + " | Responsável pelas aulas");
     }
 }

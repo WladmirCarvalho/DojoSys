@@ -1,3 +1,9 @@
+package dojosys.app;
+
+import dojosys.modelo.Aluno;
+import dojosys.modelo.Instrutor;
+import dojosys.servico.DojoManager;
+
 import java.util.Scanner;
 
 /**

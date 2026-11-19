@@ -16,13 +16,15 @@ classDiagram
 
     class Praticante {
         <<abstract>>
-        #nome: String
-        #faixa: String
-        #graus: int
+        -nome: String
+        -faixa: String
+        -graus: int
         +Praticante(nome: String, faixa: String)
         +getNome() String
         +getFaixa() String
         +getGraus() int
+        #atualizarFaixa(novaFaixa: String) void
+        #incrementarGrau() void
         +exibirResumo()* void
     }
 
@@ -91,7 +93,7 @@ classDiagram
 | Classe abstrata | `Praticante` (não pode ser instanciada; `exibirResumo()` é abstrato) |
 | Interface | `Graduavel`, implementada por `Praticante` |
 | Polimorfismo | `DojoManager.listarTodos()` chama `exibirResumo()` e cada subclasse responde do seu jeito |
-| Encapsulamento | atributos `private`/`protected` com acesso por getters |
+| Encapsulamento | atributos `private` com acesso por getters e métodos protegidos de atualização |
 | Singleton | `DojoManager` (construtor privado + `getInstancia()`) |
 
 ## Legenda

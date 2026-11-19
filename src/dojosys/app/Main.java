@@ -1,3 +1,5 @@
+package dojosys.app;
+
 /**
  * Ponto de entrada do DojôSys.
  */

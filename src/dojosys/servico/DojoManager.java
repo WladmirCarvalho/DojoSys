@@ -1,3 +1,7 @@
+package dojosys.servico;
+
+import dojosys.modelo.Praticante;
+
 import java.util.ArrayList;
 import java.util.List;
 
