@@ -33,6 +33,7 @@ public class Menu {
                     case 4 -> promoverFaixa();
                     case 5 -> adicionarGrau();
                     case 6 -> controlarMensalidade();
+                    case 7 -> removerGrau();
                     case 0 -> System.out.println("Encerrando o DojôSys. Oss!");
                     default -> System.out.println("Opção inválida. Tente novamente.");
                 }
@@ -59,6 +60,7 @@ public class Menu {
         System.out.println("4 - Promover faixa");
         System.out.println("5 - Adicionar grau");
         System.out.println("6 - Controle de mensalidades");
+        System.out.println("7 - Remover grau");
         System.out.println("0 - Sair");
         System.out.println("----------------------------------------");
     }
@@ -67,9 +69,10 @@ public class Menu {
         System.out.println("--- Cadastro de Aluno ---");
         String nome = lerTextoObrigatorio("Nome: ");
         String faixa = escolherFaixa();
+        int graus = lerGraus(faixa);
         boolean mensalidadeEmDia = lerSimNao("Mensalidade em dia? (s/n): ");
 
-        dojo.cadastrarMembro(new Aluno(nome, faixa, mensalidadeEmDia));
+        dojo.cadastrarMembro(new Aluno(nome, faixa, graus, mensalidadeEmDia));
         System.out.println("Aluno " + nome + " cadastrado com sucesso!");
     }
 
@@ -77,9 +80,10 @@ public class Menu {
         System.out.println("--- Cadastro de Instrutor ---");
         String nome = lerTextoObrigatorio("Nome: ");
         String faixa = escolherFaixa();
+        int graus = lerGraus(faixa);
         double salario = lerDecimal("Salário (R$): ");
 
-        dojo.cadastrarMembro(new Instrutor(nome, faixa, salario));
+        dojo.cadastrarMembro(new Instrutor(nome, faixa, graus, salario));
         System.out.println("Instrutor " + nome + " cadastrado com sucesso!");
     }
 
@@ -105,6 +109,14 @@ public class Menu {
         System.out.println("Grau adicionado com sucesso para " + nome + "!");
     }
 
+    private void removerGrau() {
+        System.out.println("--- Remover Grau ---");
+        String nome = lerTextoObrigatorio("Nome do praticante: ");
+
+        dojo.removerGrau(nome);
+        System.out.println("Grau removido com sucesso de " + nome + "!");
+    }
+
     private void controlarMensalidade() {
         System.out.println("--- Controle de Mensalidades ---");
         String nome = lerTextoObrigatorio("Nome do aluno: ");
@@ -127,6 +139,17 @@ public class Menu {
                 return FAIXAS[escolha - 1];
             }
             System.out.println("Faixa inválida. Escolha entre 1 e " + FAIXAS.length + ".");
+        }
+    }
+
+    private int lerGraus(String faixa) {
+        int limite = "Preta".equalsIgnoreCase(faixa) ? 6 : 4;
+        while (true) {
+            int graus = lerInteiro("Graus atuais (0 a " + limite + "): ");
+            if (graus >= 0 && graus <= limite) {
+                return graus;
+            }
+            System.out.println("Valor inválido. Para a faixa " + faixa + ", informe entre 0 e " + limite + ".");
         }
     }
 

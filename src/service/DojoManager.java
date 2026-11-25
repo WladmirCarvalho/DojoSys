@@ -130,6 +130,16 @@ public class DojoManager {
         atualizarGraduacaoNoBanco(p);
     }
 
+    public void removerGrau(String nome) {
+        Praticante p = buscarPorNome(nome);
+        if (p == null) {
+            throw new IllegalArgumentException("Praticante não encontrado: " + nome);
+        }
+
+        p.removerGrau();
+        atualizarGraduacaoNoBanco(p);
+    }
+
     public void atualizarMensalidade(String nome, boolean emDia) {
         Praticante p = buscarPorNome(nome);
         if (p == null) {
