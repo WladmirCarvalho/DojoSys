@@ -1,13 +1,11 @@
+package ui;
+
+import model.Aluno;
+import model.Instrutor;
+import service.DojoManager;
+
 import java.util.Scanner;
 
-/**
- * Menu de interação do DojôSys (console).
- *
- * Responsável: João Gabriel.
- * O menu só conversa com o DojoManager (Singleton) e com as classes de domínio;
- * ele não guarda dados próprios. Assim, quando a lógica de negócio (Davi) e o
- * banco (Wladmir) evoluírem, o menu continua funcionando sem mudanças grandes.
- */
 public class Menu {
 
     private static final String[] FAIXAS = {"Branca", "Azul", "Roxa", "Marrom", "Preta"};
@@ -27,24 +25,33 @@ public class Menu {
             opcao = lerInteiro("Escolha uma opção: ");
             System.out.println();
 
-            switch (opcao) {
-                case 1 -> cadastrarAluno();
-                case 2 -> cadastrarInstrutor();
-                case 3 -> listarMembros();
-                case 4 -> emDesenvolvimento("Promover faixa");
-                case 5 -> emDesenvolvimento("Adicionar grau");
-                case 6 -> emDesenvolvimento("Controle de mensalidades");
-                case 0 -> System.out.println("Encerrando o DojôSys. Oss!");
-                default -> System.out.println("Opção inválida. Tente novamente.");
+            try {
+                switch (opcao) {
+                    case 1 -> cadastrarAluno();
+                    case 2 -> cadastrarInstrutor();
+                    case 3 -> listarMembros();
+                    case 4 -> promoverFaixa();
+                    case 5 -> adicionarGrau();
+                    case 6 -> controlarMensalidade();
+                    case 0 -> System.out.println("Encerrando o DojôSys. Oss!");
+                    default -> System.out.println("Opção inválida. Tente novamente.");
+                }
+            } catch (IllegalArgumentException | IllegalStateException e) {
+                System.out.println("Aviso: " + e.getMessage());
+            } catch (RuntimeException e) {
+                System.err.println("Erro na operação: " + e.getMessage());
             }
+
             System.out.println();
         } while (opcao != 0);
+
+        scanner.close();
     }
 
     private void exibirOpcoes() {
         System.out.println("========================================");
-        System.out.println("              DOJÔSYS                   ");
-        System.out.println("   Sistema de Gestão de Jiu-Jitsu       ");
+        System.out.println("                DOJÔSYS                 ");
+        System.out.println("      Sistema de Gestão de Jiu-Jitsu    ");
         System.out.println("========================================");
         System.out.println("1 - Cadastrar aluno");
         System.out.println("2 - Cadastrar instrutor");
@@ -81,13 +88,30 @@ public class Menu {
         dojo.listarTodos();
     }
 
-    /**
-     * Opções que dependem de métodos ainda não criados no DojoManager
-     * (por exemplo, buscar um praticante pelo nome). Serão ligadas assim que
-     * a parte de lógica de negócio estiver na main.
-     */
-    private void emDesenvolvimento(String funcionalidade) {
-        System.out.println(funcionalidade + ": em desenvolvimento.");
+    private void promoverFaixa() {
+        System.out.println("--- Promover Faixa ---");
+        String nome = lerTextoObrigatorio("Nome do praticante: ");
+        String novaFaixa = escolherFaixa();
+
+        dojo.promoverFaixa(nome, novaFaixa);
+        System.out.println("Faixa de " + nome + " atualizada para " + novaFaixa + "!");
+    }
+
+    private void adicionarGrau() {
+        System.out.println("--- Adicionar Grau ---");
+        String nome = lerTextoObrigatorio("Nome do praticante: ");
+
+        dojo.adicionarGrau(nome);
+        System.out.println("Grau adicionado com sucesso para " + nome + "!");
+    }
+
+    private void controlarMensalidade() {
+        System.out.println("--- Controle de Mensalidades ---");
+        String nome = lerTextoObrigatorio("Nome do aluno: ");
+        boolean emDia = lerSimNao("A mensalidade está em dia? (s/n): ");
+
+        dojo.atualizarMensalidade(nome, emDia);
+        System.out.println("Mensalidade de " + nome + " atualizada com sucesso!");
     }
 
     // ---------- Leitura e validação de entradas ----------
@@ -95,7 +119,7 @@ public class Menu {
     private String escolherFaixa() {
         System.out.println("Faixas disponíveis:");
         for (int i = 0; i < FAIXAS.length; i++) {
-            System.out.println("  " + (i + 1) + " - " + FAIXAS[i]);
+            System.out.println(" " + (i + 1) + " - " + FAIXAS[i]);
         }
         while (true) {
             int escolha = lerInteiro("Número da faixa: ");
