@@ -3,4 +3,5 @@ package model;
 public interface Graduavel {
     void promoverFaixa(String novaFaixa);
     void adicionarGrau();
+    void removerGrau();
 }
