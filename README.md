@@ -52,6 +52,7 @@ DojoSys/
 │   ├── ui/
 │   │   ├── Main.java           # Ponto de entrada da aplicação
 │   │   └── Menu.java           # Interface de console e validação de entradas
+│   │   ├── DojoSysGUI.java     # Interface gráfica (Swing)
 │   └── test/
 │       ├── ConexaoDBTest.java  # Teste unitário de conexão com o banco
 │       └── DojoSysTest.java    # Testes unitários de POO, Singleton e exceções
@@ -105,6 +106,25 @@ java -cp "bin;postgresql-42.7.14.jar" ui.Main
 ```bash
 java -cp "bin:postgresql-42.7.14.jar" ui.Main
 ```
+
+
+### 3.1 Interface Gráfica (Swing)
+Além do menu de console, o sistema tem uma interface gráfica com tabela de membros e botões para cadastrar alunos e instrutores, promover faixa, adicionar e remover graus e atualizar mensalidades.
+
+Depois de compilar (passo 2), execute:
+
+**Windows (PowerShell):**
+```powershell
+java -cp "bin;postgresql-42.7.14.jar" ui.DojoSysGUI
+```
+
+**Linux / macOS:**
+```bash
+java -cp "bin:postgresql-42.7.14.jar" ui.DojoSysGUI
+```
+
+> O PostgreSQL precisa estar rodando com o banco `dojosys` configurado (passo 1), pois a interface carrega os membros direto do banco.
+
 
 ### 4. Execução dos Testes Unitários
 Os testes utilizam `assert` nativo do Java (flag `-ea`):
